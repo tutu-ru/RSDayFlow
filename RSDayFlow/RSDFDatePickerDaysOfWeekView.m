@@ -252,7 +252,6 @@
                     weekdayLabel.textColor = dayOffOfWeekLabelTextColor;
                 }
                 weekdayLabel.text = weekdaySymbol;
-                weekdayLabel.isAccessibilityElement = NO;
                 [weekdayLabels addObject:weekdayLabel];
                 [self addSubview:weekdayLabel];
             }];

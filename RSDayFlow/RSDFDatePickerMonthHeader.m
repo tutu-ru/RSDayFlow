@@ -96,7 +96,8 @@
 
 - (UIFont *)monthLabelFont
 {
-    return [UIFont fontWithName:@"HelveticaNeue" size:16.0f];
+    //return [UIFont fontWithName:@"HelveticaNeue" size:16.0f];
+    return [UIFont systemFontOfSize: 19.0f];
 }
 
 - (UIColor *)monthLabelTextColor

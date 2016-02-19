@@ -120,14 +120,15 @@
  
  @discussion Can be overridden in subclasses for customization.
  */
-- (UIColor *)dayLabelTextColor;
+@property (nonatomic, copy) UIColor *dayLabelTextColor;
 
 /**
  The text color for the label of the day off. Default value is [UIColor colorWithRed:184/255.0f green:184/255.0f blue:184/255.0f alpha:1.0f].
  
  @discussion Can be overridden in subclasses for customization.
  */
-- (UIColor *)dayOffLabelTextColor;
+@property (nonatomic, copy) UIColor *dayOffLabelTextColor;
+//(UIColor *)dayOffLabelTextColor;
 
 /**
  The text color for the label of the disabled day (not in range of start/end date set on calendar). Default value is [UIColor colorWithRed:184/255.0f green:184/255.0f blue:184/255.0f alpha:1.0f].

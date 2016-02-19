@@ -46,6 +46,9 @@
 @synthesize markImageColor = _markImageColor;
 @synthesize markImageView = _markImageView;
 @synthesize dividerImageView = _dividerImageView;
+@synthesize dayOffLabelTextColor = _dayOffLabelTextColor;
+@synthesize dayLabelTextColor = _dayLabelTextColor;
+
 
 #pragma mark - Lifecycle
 
@@ -183,7 +186,9 @@
 
 - (CGRect)selectedImageViewFrame
 {
-    return CGRectMake(CGRectGetWidth(self.frame) / 2 - 17.5f, 5.5f, 35.0f, 35.0f);
+    CGFloat frameSize = 40.0f;
+    return CGRectMake((CGRectGetWidth(self.frame) - frameSize) / 2, (CGRectGetHeight(self.frame) - frameSize) / 2 , frameSize, frameSize);
+    //return CGRectMake(CGRectGetWidth(self.frame) / 2 - 17.5f, 5.5f, 35.0f, 35.0f);
 }
 
 - (void)setMarkImage:(UIImage *)markImage
@@ -333,17 +338,34 @@
 
 - (UIFont *)dayLabelFont
 {
-    return [UIFont fontWithName:@"HelveticaNeue" size:18.0f];
+    return [UIFont systemFontOfSize:18.0f];
+    //return [UIFont fontWithName:@"HelveticaNeue" size:18.0f];
 }
 
 - (UIColor *)dayLabelTextColor
 {
-    return [UIColor blackColor];
+    if (!_dayLabelTextColor) {
+        _dayLabelTextColor = [UIColor blackColor];
+    }
+    return _dayLabelTextColor;
+}
+
+- (void) setDayLabelTextColor: (UIColor *) color
+{
+    _dayLabelTextColor = color;
 }
 
 - (UIColor *)dayOffLabelTextColor
 {
-    return [UIColor colorWithRed:184/255.0f green:184/255.0f blue:184/255.0f alpha:1.0f];
+    if (!_dayOffLabelTextColor) {
+        _dayOffLabelTextColor = [UIColor colorWithRed:184/255.0f green:184/255.0f blue:184/255.0f alpha:1.0f];;
+    }
+    return _dayOffLabelTextColor;
+}
+
+- (void) setDayOffLabelTextColor: (UIColor *) color
+{
+    _dayOffLabelTextColor = color;
 }
 
 - (UIColor *)outOfRangeDayLabelTextColor
@@ -353,7 +375,8 @@
 
 - (UIFont *)outOfRangeDayLabelFont
 {
-    return [UIFont fontWithName:@"HelveticaNeue" size:18.0f];
+    return [UIFont systemFontOfSize:18.0f];
+    //return [UIFont fontWithName:@"HelveticaNeue" size:18.0f];
 }
 
 - (UIColor *)notThisMonthLabelTextColor
@@ -373,7 +396,8 @@
 
 - (UIFont *)todayLabelFont
 {
-    return [UIFont fontWithName:@"HelveticaNeue" size:18.0f];
+    return [UIFont systemFontOfSize:18.0f];
+    //return [UIFont fontWithName:@"HelveticaNeue" size:18.0f];
 }
 
 - (UIColor *)todayLabelTextColor
@@ -383,7 +407,8 @@
 
 - (UIFont *)selectedTodayLabelFont
 {
-    return [UIFont fontWithName:@"HelveticaNeue-Bold" size:19.0f];
+    return [UIFont boldSystemFontOfSize:19.0f];
+    //return [UIFont fontWithName:@"HelveticaNeue-Bold" size:19.0f];
 }
 
 - (UIColor *)selectedTodayLabelTextColor
@@ -414,7 +439,8 @@
 
 - (UIFont *)selectedDayLabelFont
 {
-    return [UIFont fontWithName:@"HelveticaNeue-Bold" size:19.0f];
+    return [UIFont boldSystemFontOfSize:19.0f];
+    //return [UIFont fontWithName:@"HelveticaNeue-Bold" size:19.0f];
 }
 
 - (UIColor *)selectedDayLabelTextColor
