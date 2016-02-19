@@ -666,11 +666,9 @@ static NSString * const RSDFDatePickerViewDayCellIdentifier = @"RSDFDatePickerVi
         BOOL marked = [self.dataSource datePickerView:self shouldMarkDate:cellDate];
         
         if (marked) {
-            cell.backgroundColor = [UIColor lightGrayColor];
             cell.dayOffLabelTextColor = [UIColor blackColor];
             cell.dayLabelTextColor = [UIColor blackColor];
         } else {
-            cell.backgroundColor = [UIColor clearColor];
             cell.dayOffLabelTextColor = [UIColor lightGrayColor];
             cell.dayLabelTextColor = [UIColor lightGrayColor];
         }
@@ -716,10 +714,8 @@ static NSString * const RSDFDatePickerViewDayCellIdentifier = @"RSDFDatePickerVi
         }
         
         
-    } else {
-        cell.backgroundColor = [UIColor clearColor];
     }
-
+    
     [cell setNeedsDisplay];
     
     return cell;

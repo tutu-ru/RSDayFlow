@@ -186,7 +186,7 @@
 
 - (CGRect)selectedImageViewFrame
 {
-    CGFloat frameSize = 40.0f;
+    CGFloat frameSize = CGRectGetWidth(self.frame) - 10.0f;
     return CGRectMake((CGRectGetWidth(self.frame) - frameSize) / 2, (CGRectGetHeight(self.frame) - frameSize) / 2 , frameSize, frameSize);
     //return CGRectMake(CGRectGetWidth(self.frame) / 2 - 17.5f, 5.5f, 35.0f, 35.0f);
 }
