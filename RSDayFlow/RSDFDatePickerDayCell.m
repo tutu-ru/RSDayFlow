@@ -81,7 +81,62 @@
     [self addSubview:self.dateLabel];
     
     [self updateSubviews];
+    [self setNeedsUpdateConstraints];
 }
+
+-(void)setupConstraints{
+    [self addViewConstraints:self.selectedDayImageView];
+    [self addViewConstraints:self.overlayImageView];
+    [self addViewConstraints:self.dateLabel];
+}
+
+-(void)addViewConstraints:(UIView *)view{
+    NSLayoutConstraint *top =[NSLayoutConstraint
+                              constraintWithItem:view
+                              attribute:NSLayoutAttributeTop
+                              relatedBy:NSLayoutRelationEqual
+                              toItem:self
+                              attribute:NSLayoutAttributeTop
+                              multiplier:1.0
+                              constant:10.0];
+    
+    NSLayoutConstraint *bottom =[NSLayoutConstraint
+                                 constraintWithItem:view
+                                 attribute:NSLayoutAttributeBottom
+                                 relatedBy:NSLayoutRelationEqual
+                                 toItem:self
+                                 attribute:NSLayoutAttributeBottom
+                                 multiplier:1.0
+                                 constant:10.0];
+    
+    NSLayoutConstraint *left =[NSLayoutConstraint
+                               constraintWithItem:view
+                               attribute:NSLayoutAttributeLeft
+                               relatedBy:NSLayoutRelationEqual
+                               toItem:self
+                               attribute:NSLayoutAttributeLeft
+                               multiplier:1.0
+                               constant:10.0];
+    
+    NSLayoutConstraint *right =[NSLayoutConstraint
+                                constraintWithItem:view
+                                attribute:NSLayoutAttributeRight
+                                relatedBy:NSLayoutRelationEqual
+                                toItem:self
+                                attribute:NSLayoutAttributeRight
+                                multiplier:1.0
+                                constant:10.0];
+    
+    [self addConstraint:top];
+    [self addConstraint:bottom];
+    [self addConstraint:left];
+    [self addConstraint:right];
+    
+    [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+    didSetupConstraints = YES;
+}
+
+
 
 - (void)layoutSubviews
 {
@@ -93,6 +148,13 @@
     self.markImageView.frame = [self markImageViewFrame];
     self.dividerImageView.frame = [self dividerImageViewFrame];
     self.dividerImageView.image = [self dividerImage];
+}
+
+- (void)updateConstraints{
+    if (didSetupConstraints == NO){
+        [self setupConstraints];
+    }
+    [super updateConstraints];
 }
 
 - (void)drawRect:(CGRect)rect
@@ -109,6 +171,7 @@
         _dateLabel.backgroundColor = [UIColor clearColor];
         _dateLabel.textAlignment = NSTextAlignmentCenter;
     }
+    //NSLog(@"_dateLabel height %f", CGRectGetHeight(_dateLabel.frame));
     return _dateLabel;
 }
 
@@ -129,7 +192,7 @@
 
 - (CGRect)markImageViewFrame
 {
-    return CGRectMake(CGRectGetWidth(self.frame) / 2 - 4.5f, 45.5f, 9.0f, 9.0f);
+    return CGRectMake(CGRectGetWidth(self.frame) / 2 - 4.5f, CGRectGetWidth(self.frame) / 2 - 4.5f, 9.0f, 9.0f); //45.5f
 }
 
 - (UIImage *)markImage
@@ -167,9 +230,11 @@
         _overlayImageView.backgroundColor = [UIColor clearColor];
         _overlayImageView.opaque = NO;
         _overlayImageView.alpha = 0.5f;
-        _overlayImageView.contentMode = UIViewContentModeCenter;
+        //_overlayImageView.contentMode = UIViewContentModeCenter;
+        _overlayImageView.contentMode = UIViewContentModeScaleToFill;
         _overlayImageView.image = [self overlayImage];
     }
+    //NSLog(@"_overlayImageView height %f", CGRectGetHeight(_overlayImageView.frame));
     return _overlayImageView;
 }
 
@@ -180,6 +245,7 @@
         _selectedDayImageView.backgroundColor = [UIColor clearColor];
         _selectedDayImageView.contentMode = UIViewContentModeCenter;
         _selectedDayImageView.image = [self selectedDayImage];
+        _selectedDayImageView.contentMode = UIViewContentModeScaleToFill;
     }
     return _selectedDayImageView;
 }
@@ -218,7 +284,7 @@
     self.overlayImageView.hidden = !self.isHighlighted || self.isNotThisMonth || self.isOutOfRange;
     self.markImageView.hidden = !self.isMarked || self.isNotThisMonth || self.isOutOfRange;
     self.dividerImageView.hidden = self.isNotThisMonth;
-
+    
     if (self.isNotThisMonth) {
         self.dateLabel.textColor = [self notThisMonthLabelTextColor];
         self.dateLabel.font = [self dayLabelFont];
@@ -267,7 +333,7 @@
             }
         }
     }
-
+    
 }
 
 + (NSCache *)imageCache
@@ -307,6 +373,9 @@
         
         return image;
     }];
+    
+    //NSLog(@"frame height %f", CGRectGetHeight(frame));
+    //NSLog(@"ellipseImage height %f", ellipseImage.size.height);
     return ellipseImage;
 }
 
@@ -494,6 +563,8 @@
 {
     return [UIColor colorWithRed:200/255.0f green:200/255.0f blue:200/255.0f alpha:1.0f];
 }
+
+BOOL didSetupConstraints = NO;
 
 - (UIImage *)customDividerImage
 {
